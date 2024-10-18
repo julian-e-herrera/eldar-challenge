@@ -17,7 +17,7 @@ Esta es una aplicación full-stack para gestionar publicaciones con control de a
 
 - **Frontend**: React, TypeScript, Redux, React Router, Bootstrap
 - **Backend**: Node.js, Express, TypeScript, JWT
-- **Base de Datos**: (Describe la base de datos aquí si se utiliza)
+- **Base de Datos**: (no se ha utilizado mas que un mock con jsonserver en local para la obtencion de usuarios)
 - **Herramientas**: concurrently, axios
 
 ## Instalación
