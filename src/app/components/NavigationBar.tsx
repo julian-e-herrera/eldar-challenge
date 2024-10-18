@@ -3,15 +3,14 @@ import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import {  useNavigate } from 'react-router-dom';
 import { logout } from '../reduxStore/actions/authActions';
-import { hasPermission ,isAdmin} from '../roles/permissions';
+import { isAdmin} from '../roles/permissions';
 import { Role } from '../types/Role';
 
 interface NavigationBarProps {
-    handleCreate: () => void;
     role:Role
   }
 
-  const NavigationBar: React.FC<NavigationBarProps> = ({ handleCreate,role }) => {
+  const NavigationBar: React.FC<NavigationBarProps> = ({ role }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,15 +32,11 @@ interface NavigationBarProps {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
           {isAdmin(role) && (
-            <>
+      
               <Button variant="primary btn-sm ms-1 rounded" onClick={handleNavigate}>
                 Ver tabla usuarios
               </Button>
-              <Button variant="primary btn-sm ms-1 rounded" onClick={handleCreate}>
-                Crear Nuevo
-              </Button>
-  
-              </>
+         
             )}
             <Button variant="secondary btn-sm ms-1 rounded" onClick={handleLogout}>
               Cerrar Sesión

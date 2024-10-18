@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import store from './app/reduxStore';
-import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './app/pages/Login';
 import Dashboard from './app/pages/Dashboard';
 import PrivateRoute from './app/components/PrivateRoute';

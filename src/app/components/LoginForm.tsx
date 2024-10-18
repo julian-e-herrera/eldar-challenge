@@ -16,8 +16,8 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ handleSubmit, email, setEmail, password, setPassword, show, message, hideToast }) => {
   return (
     <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
-      <div className="w-100" style={{ maxWidth: '400px' }}>
-        <h2 className="text-center mb-4">Iniciar Sesión</h2>
+      <div className="w-100" style={{ maxWidth:'400px', border: '1px solid #dee2e6', padding: '20px', borderRadius: '10px', background: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <h2 className="text-center mb-4">Eldar Challenge </h2>
         <Form onSubmit={handleSubmit} className="p-4 border rounded-3 bg-light shadow-sm">
           <Form.Group controlId="formEmail" className="mb-3">
             <Form.Label className="fw-bold">Correo Electrónico</Form.Label>
