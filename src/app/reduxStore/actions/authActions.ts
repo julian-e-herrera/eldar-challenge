@@ -1,5 +1,4 @@
 import {jwtDecode, JwtPayload} from 'jwt-decode';
-import axios from 'axios';
 import { Dispatch } from 'redux';
 import { setToken, setUser ,logout as logoutAction} from '../slices/authSlice';
 
@@ -29,17 +28,3 @@ export const logout = () => (dispatch: Dispatch) => {
   dispatch(logoutAction());
 };
 
-// export const login = (token: string) => {
-//   const user = jwtDecode(token);
-//   return {
-//     type: 'LOGIN',
-//     payload: user,
-//   };
-// };
-
-// export const logout = () => {
-//   localStorage.removeItem('token')
-//   return {
-//     type: 'LOGOUT',
-//   };
-// };

@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate, Outlet ,useLocation} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../reduxStore';
-import { hasPermission ,isAdmin} from '../roles/permissions';
 
 interface PrivateRouteProps {
   roles: string[];

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container,Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState,AppDispatch } from '../reduxStore';
 import { Posteo } from '../types/Posteo';
@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [editItem, setEditItem] = useState<Posteo | null>(null);
   const [newItem, setNewItem] = useState({ title: '', userId: user.id, body: '' });
-
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
  
   useEffect(() => {
     dispatch(fetchData());
@@ -50,12 +50,13 @@ const Dashboard: React.FC = () => {
         }));
         
       }
+      setShowSuccessMessage(true)
       setShowModal(false);
     } catch (error) {
       console.error('Error saving data', error);
-      // dispatch(fetchDataError(error));
+    
     } finally {
-      setIsLoading(false); // Ocultar el spinner de carga
+      setIsLoading(false); 
     }
   };
 
@@ -68,6 +69,7 @@ const Dashboard: React.FC = () => {
   };
 
   const closeModal = () => {
+    setShowSuccessMessage(false)
     setShowModal(false);
     setEditItem(null);
   };
@@ -76,8 +78,15 @@ const Dashboard: React.FC = () => {
 
   return (
     <Container>
-      <NavigationBar handleCreate={handleCreate} role={user.role as Role}/>
-      <DataTable data={data} handleEdit={handleEdit} userRole={user?.role} />
+      <NavigationBar  role={user.role as Role}/>
+      {showSuccessMessage && (
+        <Alert variant="success" 
+        onClose={() => setShowSuccessMessage(false)}
+        dismissible className="mt-3">
+          Posteo creado exitosamente.
+        </Alert>
+      )}
+      <DataTable data={data} handleEdit={handleEdit} handleCreate={handleCreate} userRole={user?.role} />
       <FormModal
         show={showModal}
         handleClose={closeModal}
@@ -87,6 +96,7 @@ const Dashboard: React.FC = () => {
         editItem={editItem}
         newItem={newItem}
       />
+     
     </Container>
   );
 };
