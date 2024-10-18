@@ -1,11 +1,12 @@
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {  setUser  } from '../reduxStore/slices/authSlice'
-import { Button, Form, Container } from 'react-bootstrap';
+import { setUser } from '../reduxStore/slices/authSlice';
 import { setToastFunction, SigninService } from '../modules/auth/services/signin.service';
-import ErrorToast from '../components/ErrorToast';
 import { useToast } from '../hooks/error/errorHadler';
+import LoginForm from '../components/LoginForm';
+import {  Container } from 'react-bootstrap';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -20,50 +21,32 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-      SigninService.signIn({email:email, password:password}).then((data)=>{
+    SigninService.signIn({ email, password }).then((data) => {
       const token = data.accessToken;
       localStorage.setItem('token', token);  // Guardar token en localStorage
       const { id, role } = data.user;
-      dispatch(setUser( { id, role }));
-      navigate("/dashboard", { replace: true });
-      }).catch((error)=>{
-          console.error(error)
-      });
-      
+      dispatch(setUser({ id, role }));
+      navigate('/dashboard', { replace: true });
+    }).catch((error) => {
+      console.error(error);
+      showToast(error.message);
+    });
   };
 
   return (
     <Container>
-      <h2>Inicio de Sesión</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formEmail">
-          <Form.Label>Correo Electrónico</Form.Label>
-          <Form.Control
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group controlId="formPassword">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Iniciar Sesión
-        </Button>
-      </Form>
-      <ErrorToast
+      <LoginForm
+        handleSubmit={handleSubmit}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
         show={show}
         message={message}
-        onClose={hideToast}
+        hideToast={hideToast}
       />
     </Container>
   );
 };
 
 export default Login;
-
