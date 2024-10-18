@@ -1,11 +1,10 @@
 {
-    "name": "fasi-school",
+    "name": "eldar-challenge",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
         "@reduxjs/toolkit": "^2.3.0",
         "@testing-library/jest-dom": "^5.16.1",
-        "@testing-library/react": "^12.1.2",
         "@testing-library/user-event": "^13.5.0",
         "@types/jest": "^27.4.0",
         "@types/node": "^16.11.21",
@@ -57,6 +56,7 @@
         ]
     },
     "devDependencies": {
+        "@testing-library/react": "^16.0.1",
         "@types/cors": "^2.8.17",
         "@types/json-server": "^0.14.7",
         "@types/jsonwebtoken": "^9.0.7",
