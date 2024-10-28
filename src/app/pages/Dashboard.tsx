@@ -4,11 +4,14 @@ import { Container,Alert } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState,AppDispatch } from '../reduxStore';
 import { Posteo } from '../types/Posteo';
-import DataTable from '../components/DataTable';
 import FormModal from '../components/FormModal';
 import NavigationBar from '../components/NavigationBar';
 import {  fetchData ,createPost, editPost } from '../reduxStore/actions/dataActions';
 import { Role } from '../types/Role';
+import TableContainer from '../components/TableContainer';
+import NavigationButton from '../components/NavigationButton';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../utils';
 
 
 const Dashboard: React.FC = () => {
@@ -21,7 +24,9 @@ const Dashboard: React.FC = () => {
   const [editItem, setEditItem] = useState<Posteo | null>(null);
   const [newItem, setNewItem] = useState({ title: '', userId: user.id, body: '' });
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
- 
+  const navigate = useNavigate();
+
+  
   useEffect(() => {
     dispatch(fetchData());
   }, [dispatch]);
@@ -38,7 +43,7 @@ const Dashboard: React.FC = () => {
   };
 
   const handleSave = async () => {
-    setIsLoading(true); // Mostrar el spinner de carga
+    setIsLoading(true); 
     try {
       if (editItem) {
         dispatch(editPost(editItem.id, editItem));
@@ -74,11 +79,16 @@ const Dashboard: React.FC = () => {
     setEditItem(null);
   };
 
- 
+  const handleNavigate =()=>{
+    navigate(ROUTES.USERS);
+  }
 
   return (
     <Container>
-      <NavigationBar  role={user.role as Role}/>
+       <NavigationBar role={user.role as Role} controllers={<NavigationButton variant="primary"
+    text="Ver tabla usuarios"
+    onClick={handleNavigate}
+      />} />
       {showSuccessMessage && (
         <Alert variant="success" 
         onClose={() => setShowSuccessMessage(false)}
@@ -86,7 +96,19 @@ const Dashboard: React.FC = () => {
           Posteo creado exitosamente.
         </Alert>
       )}
-      <DataTable data={data} handleEdit={handleEdit} handleCreate={handleCreate} userRole={user?.role} />
+      <TableContainer
+        title="Posts"
+        data={data}
+        handleEdit={handleEdit}
+        handleCreate={handleCreate}
+        userRole={user?.role}
+        columns={[
+          { title: 'Título', className: 'text-secondary' },
+          { title: 'UserID', key: 'userId', className: 'text-secondary' },
+          { title: 'Body', className: 'text-secondary' },
+      ]}
+       
+      />
       <FormModal
         show={showModal}
         handleClose={closeModal}
@@ -96,7 +118,6 @@ const Dashboard: React.FC = () => {
         editItem={editItem}
         newItem={newItem}
       />
-     
     </Container>
   );
 };

@@ -23,13 +23,13 @@ const Login: React.FC = () => {
     e.preventDefault();
     SigninService.signIn({ email, password }).then((data) => {
       const token = data.accessToken;
-      localStorage.setItem('token', token);  // Guardar token en localStorage
+      localStorage.setItem('token', token);  
       const { id, role } = data.user;
       dispatch(setUser({ id, role }));
       navigate('/dashboard', { replace: true });
     }).catch((error) => {
       console.error(error);
-      showToast(error.message);
+      showToast('Email y/o password incorrectos');
     });
   };
 
